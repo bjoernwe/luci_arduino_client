@@ -4,6 +4,8 @@ import serial
 import sys
 import time
 
+import luci_presets
+
 
 def main():
 
@@ -13,6 +15,7 @@ def main():
     darkness = 0
     darkness_color = np.array([-1, -1, -1, -1])
     duty_cycle = 50
+    phase_shift = 1;
 
     arduino = serial.Serial('/dev/ttyACM0', 9600, timeout=5)
 
@@ -28,8 +31,8 @@ def main():
 
                 if hz < 100:
                     hz = hz + 1
-                print 'Hz: %d' % hz
                 arduino.write('H%d\n' % hz)
+                print arduino.readline()
 
             #
             # Frequency(Hz) DOWN
@@ -38,8 +41,8 @@ def main():
 
                 if hz > 1:
                     hz = hz - 1
-                print 'Hz: %d' % hz
                 arduino.write('H%d\n' % hz)
+                print arduino.readline()
 
             #
             #
@@ -90,20 +93,22 @@ def main():
             #
             #
             elif key == getkey.keys.SPACE:
-                while darkness < .75 * brightness:
-                    darkness += 2
+                if darkness < .75 * brightness:
+                    while darkness < .75 * brightness:
+                        darkness += 2
+                        arduino.write('b%d\n' % darkness)
+                        print arduino.readline()
+                        time.sleep(0.1)
+                else:
+                    darkness = 0
                     arduino.write('b%d\n' % darkness)
-                    #print 'Brightness (off): %d' % darkness
                     print arduino.readline()
-                    time.sleep(0.1)
 
             #
             #
             #
             elif key == getkey.keys.ENTER:
-                darkness = 0
-                arduino.write('b%d\n' % darkness)
-                print 'Brightness (off): %d' % darkness
+                pass
 
             #
             #
@@ -112,7 +117,6 @@ def main():
                 if duty_cycle < 100:
                     duty_cycle += 1
                 arduino.write('D%d\n' % duty_cycle)
-                #print 'Duty Cycle: %d' % duty_cycle
                 print arduino.readline()
 
             #
@@ -122,7 +126,6 @@ def main():
                 if duty_cycle > 1:
                     duty_cycle -= 1
                 arduino.write('D%d\n' % duty_cycle)
-                #print 'Duty Cycle: %d' % duty_cycle
                 print arduino.readline()
 
             #
@@ -146,9 +149,29 @@ def main():
             # Toggle Phase Shift
             #
             elif key == getkey.keys.X:
-
-                arduino.write(b'X\n')
+                phase_shift = 1 - phase_shift
+                arduino.write(b'X%d\n' % phase_shift)
                 print arduino.readline()
+
+            #
+            #
+            #
+            elif key == getkey.keys.DIGIT_ONE:
+                luci_presets.presets[0].apply(arduino)
+            elif key == getkey.keys.DIGIT_TWO:
+                luci_presets.presets[1].apply(arduino)
+            elif key == getkey.keys.DIGIT_THREE:
+                luci_presets.presets[2].apply(arduino)
+            elif key == getkey.keys.DIGIT_FOUR:
+                luci_presets.presets[3].apply(arduino)
+            elif key == getkey.keys.DIGIT_FIVE:
+                luci_presets.presets[4].apply(arduino)
+            elif key == getkey.keys.DIGIT_SIX:
+                luci_presets.presets[5].apply(arduino)
+            elif key == getkey.keys.DIGIT_SEVEN:
+                luci_presets.presets[6].apply(arduino)
+            elif key == getkey.keys.DIGIT_EIGHT:
+                luci_presets.presets[7].apply(arduino)
 
             else:
                 print key
