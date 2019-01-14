@@ -1,9 +1,9 @@
 import getkey
 import numpy as np
-import serial
 import sys
 import time
 
+import luci
 import luci_presets
 
 
@@ -17,7 +17,7 @@ def main():
     duty_cycle = 50
     phase_shift = 1
 
-    arduino = serial.Serial('/dev/ttyACM0', 9600, timeout=5)
+    luci = luci.Luci(dev='/dev/ttyACM0')
 
     try:
         while True:
@@ -31,8 +31,7 @@ def main():
 
                 if hz < 100:
                     hz = hz + 1
-                arduino.write('H%d\n' % hz)
-                print arduino.readline()
+                print luci.set_frequency(hz)
 
             #
             # Frequency(Hz) DOWN
@@ -41,8 +40,7 @@ def main():
 
                 if hz > 1:
                     hz = hz - 1
-                arduino.write('H%d\n' % hz)
-                print arduino.readline()
+                print luci.set_frequency(hz)
 
             #
             #
@@ -64,13 +62,11 @@ def main():
                 if brightness >= 0:
                     brightness *= 2
                     brightness = min(brightness, 255)
-                    arduino.write(b'B%d\n' % brightness)
+                    print luci.set_brightness(brightness)
                 else:
                     brightness_color *= 2
                     brightness_color = np.clip(brightness_color, -1, 255)
-                    arduino.write(b'C%d,%d,%d,%d\n' % (brightness_color[0], brightness_color[1], brightness_color[2], brightness_color[3]))
-
-                print arduino.readline()
+                    print luci.set_brightness_color(brightness_color)
 
             #
             #
@@ -80,14 +76,12 @@ def main():
                 if brightness >= 0:
                     brightness //= 2
                     brightness = max(brightness, 1)
-                    arduino.write(b'B%d\n' % brightness)
+                    print luci.set_brightness(brightness)
                 else:
                     brightness_color //= 2
                     brightness_color[:3] = np.clip(brightness_color[:3], -1, 0)
                     brightness_color[3] = np.clip(brightness_color[3], 1, 255)
-                    arduino.write(b'C%d,%d,%d,%d\n' % (brightness_color[0], brightness_color[1], brightness_color[2], brightness_color[3]))
-
-                print arduino.readline()
+                    print luci.set_brightness_color(brightness_color)
 
             #
             #
@@ -96,13 +90,11 @@ def main():
                 if darkness < .75 * brightness:
                     while darkness < .75 * brightness:
                         darkness += 2
-                        arduino.write('b%d\n' % darkness)
-                        print arduino.readline()
+                        print luci.set_darkness(darkness)
                         time.sleep(0.1)
                 else:
                     darkness = 0
-                    arduino.write('b%d\n' % darkness)
-                    print arduino.readline()
+                    luci.set_darkness(darkness)
 
             #
             #
@@ -116,8 +108,7 @@ def main():
             elif key == getkey.keys.PLUS:
                 if duty_cycle < 100:
                     duty_cycle += 1
-                arduino.write('D%d\n' % duty_cycle)
-                print arduino.readline()
+                print luci.set_duty_cycle(duty_cycle)
 
             #
             #
@@ -125,8 +116,7 @@ def main():
             elif key == getkey.keys.MINUS:
                 if duty_cycle > 1:
                     duty_cycle -= 1
-                arduino.write('D%d\n' % duty_cycle)
-                print arduino.readline()
+                print luci.set_duty_cycle(duty_cycle)
 
             #
             # Toggle RGB (ignoring white)
@@ -136,22 +126,18 @@ def main():
                 if brightness >= 0:
                     brightness_color = [0, 0, 0, brightness]
                     brightness = -1
-                    arduino.write(b'C%d,%d,%d,%d\n' % (
-                    brightness_color[0], brightness_color[1], brightness_color[2], brightness_color[3]))
+                    print luci.set_brightness_color(brightness_color)
                 else:
                     brightness = brightness_color[3]
                     brightness_color = [-1, -1, -1, -1]
-                    arduino.write(b'B%d\n' % brightness)
-
-                print arduino.readline()
+                    print luci.set_brightness(brightness)
 
             #
             # Toggle Phase Shift
             #
             elif key == getkey.keys.X:
                 phase_shift = 1 - phase_shift
-                arduino.write(b'X%d\n' % phase_shift)
-                print arduino.readline()
+                luci.set_phase_shift(phase_shift)
 
             #
             #
@@ -175,10 +161,6 @@ def main():
 
             else:
                 print key
-            #time.sleep(0.01)
-            arduino.flushInput()
-            arduino.flushOutput()
-
 
     except KeyboardInterrupt:
         sys.exit()
