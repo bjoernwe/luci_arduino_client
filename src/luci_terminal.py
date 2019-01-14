@@ -15,7 +15,7 @@ def main():
     darkness = 0
     darkness_color = np.array([-1, -1, -1, -1])
     duty_cycle = 50
-    phase_shift = 1;
+    phase_shift = 1
 
     arduino = serial.Serial('/dev/ttyACM0', 9600, timeout=5)
 
