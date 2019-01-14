@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>320</width>
+    <height>360</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="4" column="1">
+    <widget class="QLabel" name="label_darkness_value">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="1">
+    <widget class="QCheckBox" name="checkBox_darkness">
+     <property name="minimumSize">
+      <size>
+       <width>62</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>active</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QLabel" name="label_frequency_value">
+     <property name="text">
+      <string>Hz</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="3">
+    <widget class="QCheckBox" name="checkBox_shift">
+     <property name="text">
+      <string>shift</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="label_duty_cycle">
+     <property name="text">
+      <string>Duty Cycle</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="3" alignment="Qt::AlignHCenter">
+    <widget class="QSlider" name="verticalSlider_duty_cycle">
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3">
+    <widget class="QLabel" name="label_duty_cycle_value">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="label_darkness">
+     <property name="text">
+      <string>Darkness</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1" alignment="Qt::AlignHCenter">
+    <widget class="QSlider" name="verticalSlider_darkness">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_brightnes_value">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="2" alignment="Qt::AlignHCenter">
+    <widget class="QSlider" name="verticalSlider_frequency">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>50</number>
+     </property>
+     <property name="pageStep">
+      <number>5</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0" alignment="Qt::AlignHCenter">
+    <widget class="QSlider" name="verticalSlider_brightness">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="pageStep">
+      <number>10</number>
+     </property>
+     <property name="value">
+      <number>5</number>
+     </property>
+     <property name="tracking">
+      <bool>true</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::NoTicks</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_brightness">
+     <property name="text">
+      <string>Brightness</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="label_frequency">
+     <property name="text">
+      <string>Frequency</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>verticalSlider_brightness</tabstop>
+  <tabstop>verticalSlider_darkness</tabstop>
+  <tabstop>checkBox_darkness</tabstop>
+  <tabstop>verticalSlider_frequency</tabstop>
+  <tabstop>verticalSlider_duty_cycle</tabstop>
+  <tabstop>checkBox_shift</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>verticalSlider_brightness</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Form</receiver>
+   <slot>updateBrightness()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>44</x>
+     <y>188</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>79</x>
+     <y>95</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_darkness</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Form</receiver>
+   <slot>updateDarkness()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>148</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>81</x>
+     <y>133</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_frequency</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Form</receiver>
+   <slot>updateFrequency()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>195</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>242</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_duty_cycle</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Form</receiver>
+   <slot>updateDutyCycle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>274</x>
+     <y>206</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>243</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_darkness</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>Form</receiver>
+   <slot>updateDarknessCheckbox()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>120</x>
+     <y>338</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>87</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_shift</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>Form</receiver>
+   <slot>updateDutyCycleShift()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>276</x>
+     <y>343</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>240</x>
+     <y>268</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <designerdata>
+  <property name="gridDeltaX">
+   <number>10</number>
+  </property>
+  <property name="gridDeltaY">
+   <number>10</number>
+  </property>
+  <property name="gridSnapX">
+   <bool>true</bool>
+  </property>
+  <property name="gridSnapY">
+   <bool>true</bool>
+  </property>
+  <property name="gridVisible">
+   <bool>true</bool>
+  </property>
+ </designerdata>
+ <slots>
+  <slot>updateBrightness()</slot>
+  <slot>updateDarkness()</slot>
+  <slot>updateFrequency()</slot>
+  <slot>updateDutyCycle()</slot>
+  <slot>updateDarknessCheckbox()</slot>
+  <slot>updateDutyCycleShift()</slot>
+ </slots>
+</ui>
