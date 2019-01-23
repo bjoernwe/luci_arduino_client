@@ -3,7 +3,7 @@ import numpy as np
 import sys
 import time
 
-import luci
+from luci import Luci
 import luci_presets
 
 
@@ -17,7 +17,7 @@ def main():
     duty_cycle = 50
     phase_shift = 1
 
-    luci = luci.Luci(dev='/dev/ttyACM0')
+    luci = Luci(dev='/dev/ttyACM0')
 
     try:
         while True:
