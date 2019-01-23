@@ -25,12 +25,13 @@ except AttributeError:
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(320, 360)
+        Form.resize(322, 360)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
         Form.setSizePolicy(sizePolicy)
+        Form.setMaximumSize(QtCore.QSize(322, 360))
         self.gridLayout = QtGui.QGridLayout(Form)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.label_darkness_value = QtGui.QLabel(Form)
